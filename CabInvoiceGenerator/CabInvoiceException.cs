@@ -4,10 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-
 namespace CabInvoiceGenerator
 {
-    class CabInvoiceException:Exception
+    class CabInvoiceException : Exception
     {
         ExceptionType type;
         public enum ExceptionType
@@ -22,7 +21,6 @@ namespace CabInvoiceGenerator
 
     }
 }
-
 
 
 

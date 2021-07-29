@@ -30,7 +30,7 @@ namespace UnitTest
             Assert.AreEqual(expected, fare);
         }
         /// <summary>
-        /// Calculating total are for multiple rides
+        /// Calculating total fare for multiple rides
         /// </summary>
         [TestMethod]
         [TestCategory("Multiple Rides")]
@@ -45,6 +45,22 @@ namespace UnitTest
             var res = summary.Equals(expectedSummary);
             //Assert
             Assert.IsNotNull(res);
+        }
+        /// <summary>
+        /// Calculating the average value
+        /// </summary>
+        [TestMethod]
+        [TestCategory("Average")]
+        public void GivenDistanceAndTimeShouldReturnAverage()
+        {
+            ///AAA Methodology
+            //Arrange
+            Ride[] rides = { new Ride(12.0, 5), new Ride(3.5, 1) };
+            //Act
+            InvoiceSummary summary = invoice.CalculateFare(rides);
+            InvoiceSummary expectedSummary = new InvoiceSummary(2, 161.0);
+            //Assert
+            Assert.AreEqual(summary, expectedSummary);
         }
     }
 }
