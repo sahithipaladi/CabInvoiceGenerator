@@ -8,45 +8,40 @@ namespace CabInvoiceGenerator
 {
     public class RideRepository
     {
-        public static Dictionary<string, Ride[]> Account = new Dictionary<string, Ride[]>();
-        public static void AddRides(string userId, Ride[] inputRides)
+        Dictionary<string, List<Ride>> userRides = null;
+        public RideRepository()
         {
+            this.userRides = new Dictionary<string, List<Ride>>();
+        }
+
+        public void AddRide(string userId, Ride[] rides)
+        {
+            bool rideList = this.userRides.ContainsKey(userId);
             try
             {
-                // checking if user id is null
-                if (userId == null)
+                if (!rideList)
                 {
-                    throw new CabInvoiceException(CabInvoiceException.ExceptionType.NULL_USER, "Invalid User");
-                }
-
-                // checking if inputRides is null
-                if (inputRides == null)
-                {
-                    throw new CabInvoiceException(CabInvoiceException.ExceptionType.NULL_RIDES, "No rides found");
-                }
-
-                // checking if user already exits in account list
-                // if not : adding user to account and his rides
-                if (Account.ContainsKey(userId))
-                {
-                    // adding new rides at the end of user ride list
-                    //Account.Add(userId, inputRides);
-                    foreach (Ride ride in inputRides)
-                    {
-                        //Account[userId].Add(ride);
-                        Account[userId].Append(ride);
-                    }
-                }
-                else
-                {
-                    Account.Add(userId, inputRides);
+                    List<Ride> list = new List<Ride>();
+                    list.AddRange(rides);
+                    this.userRides.Add(userId, list);
                 }
             }
-            catch (Exception exception)
+            catch
             {
-                Console.WriteLine(exception.Message);
+                throw new CabInvoiceException(CabInvoiceException.ExceptionType.NULL_RIDES, "Rides are null");
             }
         }
 
+        public Ride[] GetRides(string userId)
+        {
+            try
+            {
+                return this.userRides[userId].ToArray();
+            }
+            catch (CabInvoiceException)
+            {
+                throw new CabInvoiceException(CabInvoiceException.ExceptionType.INVALID_USER_ID, "Invalid User Id");
+            }
+        }
     }
 }

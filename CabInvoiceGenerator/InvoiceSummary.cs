@@ -8,9 +8,9 @@ namespace CabInvoiceGenerator
 {
     public class InvoiceSummary
     {
-        private int numberOfRides;
-        private double totalFare;
-        private double averageFare;
+        public int numberOfRides;
+        public double totalFare;
+        public double averageFare;
 
         //Parameterized constructor......
         public InvoiceSummary(int numberOfRides, double totalFare)
